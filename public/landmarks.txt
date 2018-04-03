@@ -1,0 +1,8 @@
+{"name": "Taj Mahal", "latitude": "27.1750", "longitude": "78.0422"}
+{"name": "Empire State Building", "latitude": "40.7484", "longitude": "-73.9857"}
+{"name": "Panama Canal", "latitude": "9.3874", "longitude": "-79.9186"}
+{"name": "Mount Everest", "latitude": "27.9878", "longitude": "86.9250"}
+{"name": "Stonehenge", "latitude": "51.1789", "longitude": "-1.8262"}
+{"name": "The Pyramids", "latitude": "29.976480", "longitude": "31.131302"}
+{"name": "Golden Gate Bridge", "latitude": "37.8199", "longitude": "-122.4783"}
+{"name": "Great Wall of China", "latitude": "40.4319", "longitude": "116.5704"}

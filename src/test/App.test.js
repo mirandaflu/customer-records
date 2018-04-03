@@ -34,6 +34,11 @@ describe('<App />', () => {
 		component.instance().parseInput('{{{THIS IS NOT JSON');
 		expect(component.state('error')).toEqual('An error occurred while trying to parse the input');
 	});
+
+	it('shows an error when a record is missing a field', () => {
+		component.instance().parseInput('{"user_id": 12, "name": "Miss Longitude", "longitude": "-6.040123"}');
+		expect(component.state('error')).toEqual('One or more records are missing name, latitude, or longitude');
+	});
 		
 	it('converts degrees to radians', () => {
 		expect(component.instance().degreesToRadians(180)).toEqual(Math.PI);

@@ -7,9 +7,9 @@
 
 .container {
 	width: 100%;
-	height: 90vh;
 	display: table;
 }
+.IO.container { height: 90vh; }
 .row {
 	display: table-row;
 }
@@ -82,4 +82,13 @@ textarea.error {
 	font-weight: bold;
 	height: 18pt;
 	width: 48pt;
+}
+
+button {
+	margin: 4pt;
+	padding: 4pt;
+	border: 1px solid grey;
+	border-radius: 5px;
+	color: white;
+	background-color: #1f8ded;
 }

@@ -20,8 +20,8 @@ class App extends React.Component {
 		error: false
 	}
 
-	getCustomersFromFile() {
-		return axios.get('./customers.txt').then(result => {
+	getCustomersFromFile(filename = 'customers') {
+		return axios.get('./'+filename+'.txt').then(result => {
 			this.parseInput(result.data);
 		}).catch(error => {
 			console.error(error);
@@ -34,6 +34,8 @@ class App extends React.Component {
 		try {
 			s.parsedJSON = JSON.parse('[' + value.split('\n').join(',') + ']');
 			s.error = false;
+			if (s.parsedJSON.find(record => !record.name || !record.latitude || !record.longitude))
+				s.error = 'One or more records are missing name, latitude, or longitude';
 		} catch(e) {
 			s.error = 'An error occurred while trying to parse the input';
 		}
@@ -65,8 +67,10 @@ class App extends React.Component {
 		const output = this.state.parsedJSON
 			.filter(this.isCustomerCloseEnough)
 			.sort((a,b) => a.user_id - b.user_id)
-			.map(customer => customer.user_id + ' ' + customer.name)
-			.join('\n');
+			.map(customer => {
+				if (customer.user_id) return customer.user_id + ' ' + customer.name;
+				else return customer.name;
+			}).join('\n');
 		
 		let i = 0;
 
@@ -76,7 +80,9 @@ class App extends React.Component {
 					<GoogleMapReact
 						center={{lat: constants.dublinOffice.latitude, lng: constants.dublinOffice.longitude}}
 						zoom={7}>
-						{this.state.parsedJSON.map(customer => {
+						{this.state.parsedJSON.filter(
+							customer => customer.latitude && customer.longitude
+						).map(customer => {
 							i += 1;
 							return <MapMarker
 								key={i + '' + customer.id}
@@ -94,6 +100,16 @@ class App extends React.Component {
 					km of the Dublin Office?
 				</h3>
 				<div className="container">
+					<div className="row">
+						<button className="column" style={{width: '25%'}}
+							onClick={this.getCustomersFromFile.bind(this, 'customers')}>Customers (original)</button>
+						<button className="column" style={{width: '25%'}}
+							onClick={this.getCustomersFromFile.bind(this, 'cities')}>Cities</button>
+						<button className="column" style={{width: '25%'}}
+							onClick={this.getCustomersFromFile.bind(this, 'landmarks')}>Landmarks</button>
+					</div>
+				</div>
+				<div className="IO container">
 					<div className="row">
 						<div className="column" style={{width: '70%'}}>
 							<legend><span className="title">Input</span></legend>
