@@ -78,6 +78,7 @@ class App extends React.Component {
 			<div className="App">
 				<div className="map-container">
 					<GoogleMapReact
+						bootstrapURLKeys={{key: 'AIzaSyCSr1jlbbxFTA7mJ9PXKfVhUiPfz519O-0'}}
 						center={{lat: constants.dublinOffice.latitude, lng: constants.dublinOffice.longitude}}
 						zoom={7}>
 						{this.state.parsedJSON.filter(
