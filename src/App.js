@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+
+import constants from './constants';
 import './App.css';
 
 class App extends React.Component {
@@ -27,13 +29,27 @@ class App extends React.Component {
 		}
 		this.setState(s);
 	}
+	degreesToRadians = (degrees) => degrees * (Math.PI/180)
+	isCustomerCloseEnough = (customer) => {
+		// https://en.wikipedia.org/wiki/Great-circle_distance
+		// φ = latitude in radians, λ = longitude in radians
+		const φ1 = this.degreesToRadians(parseFloat(customer.latitude)),
+			φ2 = this.degreesToRadians(constants.dublinOffice.latitude),
+			Δλ = this.degreesToRadians(constants.dublinOffice.longitude - parseFloat(customer.longitude));
+
+		const centralAngle = Math.acos(
+			Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(Δλ)
+		);
+		const distance = constants.radiusOfEarth * centralAngle;
+		return distance <= 100;
+	}
 
 	handleInputChange = (e) => { this.parseInput(e.target.value ); }
 	
 	componentWillMount() { this.getCustomersFromFile(); }
 	render() {
 		const output = this.state.parsedJSON
-			.filter(customer => customer.name.indexOf('Cahill') !== -1)
+			.filter(this.isCustomerCloseEnough)
 			.sort((a,b) => a.user_id - b.user_id)
 			.map(customer => customer.user_id + ' ' + customer.name)
 			.join('\n');
