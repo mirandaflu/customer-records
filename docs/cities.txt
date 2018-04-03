@@ -1,0 +1,14 @@
+{"name": "Dublin", "latitude": "53.3498", "longitude": "-6.2603"}
+{"name": "Galway", "latitude": "53.2707", "longitude": "-9.0568"}
+{"name": "Cork", "latitude": "51.8969", "longitude": "-8.4863"}
+{"name": "London", "latitude": "51.5074", "longitude": "-0.1278"}
+{"name": "New York", "latitude": "40.7128", "longitude": "-74.0060"}
+{"name": "Paris", "latitude": "48.8566", "longitude": "2.3522"}
+{"name": "Fort Collins", "latitude": "40.5853", "longitude": "-105.0844"}
+{"name": "Cape Town", "latitude": "-33.9249", "longitude": "18.4241"}
+{"name": "Tokyo", "latitude": "35.6895", "longitude": "139.6917"}
+{"name": "Mumbai", "latitude": "19.0760", "longitude": "72.8777"}
+{"name": "Shanghai", "latitude": "31.2304", "longitude": "121.4737"}
+{"name": "Istanbul", "latitude": "41.0082", "longitude": "28.9784"}
+{"name": "São Paulo", "latitude": "-23.5505", "longitude": "-46.6333"}
+{"name": "Moscow", "latitude": "55.7558", "longitude": "37.6173"}
