@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import coordinates from './coordinates';
+
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import customers from './customers-mock';
-import coordinates from './coordinates';
 const mock = new MockAdapter(axios);
 
 import enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 enzyme.configure({ adapter: new Adapter() });
 
-import App from './App';
+import App from '../App';
 
 mock.onGet('./customers.txt').reply(200, customers);
 
