@@ -17,7 +17,7 @@
 	display: table-cell;
 }
 .column legend {
-	height: 8vh;
+	height: 6vh;
 	position: relative;
 }
 .column .title {
@@ -72,4 +72,14 @@ textarea.error {
 }
 .close {
 	background-color: #cfc;
+}
+
+.threshold {
+	margin: 4pt;
+	margin-right: 0;
+	padding: 4pt;
+	font-size: 16pt;
+	font-weight: bold;
+	height: 18pt;
+	width: 48pt;
 }

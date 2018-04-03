@@ -16,6 +16,7 @@ class App extends React.Component {
 	state = {
 		input: '',
 		parsedJSON: [],
+		threshold: 100,
 		error: false
 	}
 
@@ -49,10 +50,11 @@ class App extends React.Component {
 			Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(Δλ)
 		);
 		const distance = constants.radiusOfEarth * centralAngle;
-		return distance <= 100;
+		return distance <= this.state.threshold;
 	}
 
 	handleInputChange = (e) => { this.parseInput(e.target.value ); }
+	handleThresholdChange = (e) => { this.setState({ threshold: e.target.value }); }
 	
 	componentWillMount() { this.getCustomersFromFile(); }
 	render() {
@@ -80,6 +82,11 @@ class App extends React.Component {
 						<OfficeMarker lat={constants.dublinOffice.latitude} lng={constants.dublinOffice.longitude} />
 					</GoogleMapReact>
 				</div>
+				<h3>
+					Who's within&nbsp;
+					<input type="number" className="threshold" defaultValue={this.state.threshold} onChange={this.handleThresholdChange} />
+					km of the Dublin Office?
+				</h3>
 				<div className="container">
 					<div className="row">
 						<div className="column" style={{width: '70%'}}>
