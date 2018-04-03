@@ -21,11 +21,12 @@ class App extends React.Component {
 	}
 
 	getCustomersFromFile() {
-		axios.get('./customers.txt').then(result => {
+		return axios.get('./customers.txt').then(result => {
 			this.parseInput(result.data);
 		}).catch(error => {
 			console.error(error);
-			this.setState({ output: 'error' });
+			if (this._mounted)
+				this.setState({ error: 'An error occurred while trying to load the input file' });
 		});
 	}
 	parseInput = (value) => {
@@ -36,7 +37,7 @@ class App extends React.Component {
 		} catch(e) {
 			s.error = 'An error occurred while trying to parse the input';
 		}
-		this.setState(s);
+		if (this._mounted) this.setState(s);
 	}
 	degreesToRadians = (degrees) => degrees * (Math.PI/180)
 	isCustomerCloseEnough = (customer) => {
@@ -57,6 +58,8 @@ class App extends React.Component {
 	handleThresholdChange = (e) => { this.setState({ threshold: e.target.value }); }
 	
 	componentWillMount() { this.getCustomersFromFile(); }
+	componentDidMount() { this._mounted = true; }
+	componentWillUnmount() { this._mounted = false; }
 	render() {
 
 		const output = this.state.parsedJSON
@@ -65,20 +68,23 @@ class App extends React.Component {
 			.map(customer => customer.user_id + ' ' + customer.name)
 			.join('\n');
 		
+		let i = 0;
+
 		return (
 			<div className="App">
 				<div className="map-container">
 					<GoogleMapReact
 						center={{lat: constants.dublinOffice.latitude, lng: constants.dublinOffice.longitude}}
 						zoom={7}>
-						{this.state.parsedJSON.map(customer => 
-							<MapMarker
-								key={customer.id}
+						{this.state.parsedJSON.map(customer => {
+							i += 1;
+							return <MapMarker
+								key={i + '' + customer.id}
 								lat={customer.latitude}
 								lng={customer.longitude}
 								close={this.isCustomerCloseEnough(customer)}
 								name={customer.name} />
-						)}
+						})}
 						<OfficeMarker lat={constants.dublinOffice.latitude} lng={constants.dublinOffice.longitude} />
 					</GoogleMapReact>
 				</div>
