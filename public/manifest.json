@@ -1,0 +1,9 @@
+{
+  "short_name": "Customer Records",
+  "name": "Customer Records",
+  "icons": [],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
