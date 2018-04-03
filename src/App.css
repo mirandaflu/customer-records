@@ -14,11 +14,10 @@
 	display: table-row;
 }
 .column {
-	width: 50%;
 	display: table-cell;
 }
 .column legend {
-	height: 10vh;
+	height: 8vh;
 	position: relative;
 }
 .column .title {
@@ -30,4 +29,47 @@
 .column textarea {
 	width: 95%;
 	height: 80vh;
+}
+textarea.error {
+	background-color: #fcc;
+}
+
+.map-container {
+	width: 100%;
+	height: 400px;
+}
+.mapmarker:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translate(-2px, -7px) rotate(45deg);
+	height: 0;
+	width: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #555;
+}
+.mapmarker {
+	border-radius: 10px;
+	position: relative;
+	height: 24pt;
+	width: 32pt;
+	padding: 4pt;
+}
+.mapmarker:hover {
+	z-index: 99;
+}
+.office {
+	color: white;
+	background-color: #1f8ded;
+	border: 1px solid white;
+}
+.customer {
+	background-color: white;
+	border: 1px dotted grey;
+	
+}
+.close {
+	background-color: #cfc;
 }

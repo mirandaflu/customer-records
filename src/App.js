@@ -1,8 +1,16 @@
 import React from 'react';
+import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
 
 import constants from './constants';
 import './App.css';
+
+const MapMarker = ({name, close}) => {
+	let className = 'mapmarker customer';
+	if (close) className += ' close';
+	return <div className={className}>{name}</div>;
+}
+const OfficeMarker = () => <div className="mapmarker office">Dublin Office</div>;
 
 class App extends React.Component {
 	state = {
@@ -48,6 +56,7 @@ class App extends React.Component {
 	
 	componentWillMount() { this.getCustomersFromFile(); }
 	render() {
+
 		const output = this.state.parsedJSON
 			.filter(this.isCustomerCloseEnough)
 			.sort((a,b) => a.user_id - b.user_id)
@@ -56,15 +65,32 @@ class App extends React.Component {
 		
 		return (
 			<div className="App">
+				<div className="map-container">
+					<GoogleMapReact
+						center={{lat: constants.dublinOffice.latitude, lng: constants.dublinOffice.longitude}}
+						zoom={7}>
+						{this.state.parsedJSON.map(customer => 
+							<MapMarker
+								key={customer.id}
+								lat={customer.latitude}
+								lng={customer.longitude}
+								close={this.isCustomerCloseEnough(customer)}
+								name={customer.name} />
+						)}
+						<OfficeMarker lat={constants.dublinOffice.latitude} lng={constants.dublinOffice.longitude} />
+					</GoogleMapReact>
+				</div>
 				<div className="container">
 					<div className="row">
-						<div className="column">
+						<div className="column" style={{width: '70%'}}>
 							<legend><span className="title">Input</span></legend>
 							<textarea value={this.state.input} onChange={this.handleInputChange}/>
 						</div>
-						<div className="column">
+						<div className="column" style={{width: '30%'}}>
 							<legend><span className="title">Output</span></legend>
-							<textarea disabled readOnly value={this.state.error || output} />
+							<textarea disabled readOnly
+								className={(this.state.error === false)? '': 'error'}
+								value={this.state.error || output} />
 						</div>
 					</div>
 				</div>
